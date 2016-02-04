@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.mnf.sports.Fragments.BFragment;
 import com.mnf.sports.Fragments.FragmentInstance;
+import com.mnf.sports.Fragments.GFragment;
+import com.mnf.sports.Fragments.RFragment;
+import com.mnf.sports.Fragments.YFragment;
 import com.mnf.sports.R;
 
 public class GroupActivityReal extends AppCompatActivity {
@@ -60,15 +64,16 @@ public class GroupActivityReal extends AppCompatActivity {
                 switch (position % 4) {
                     case 0:
 
-                    return FragmentInstance.getInstance(1);
+                    //return FragmentInstance.getInstance(1);
+                    return new BFragment();
                     case 1:
 
-                    return FragmentInstance.getInstance(1);
+                    return new GFragment();
                     case 2:
 
-                    return FragmentInstance.getInstance(1);
+                    return new YFragment();
                     case 3:
-                        return FragmentInstance.getInstance(1);
+                        return new RFragment();
                     default:
                         return FragmentInstance.getInstance(1);
                        // return null;

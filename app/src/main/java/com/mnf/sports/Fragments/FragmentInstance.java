@@ -27,6 +27,7 @@ public class FragmentInstance extends Fragment {
         //Log.e(TAG,"value of pos is "+pos);
         bundle.putInt("position", pos);
 
+        
 
         fragmentInstance.setArguments(bundle);
 
