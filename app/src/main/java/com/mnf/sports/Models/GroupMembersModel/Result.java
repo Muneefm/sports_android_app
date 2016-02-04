@@ -68,7 +68,7 @@ public class Result {
     /**
      * 
      * @return
-     *     The _class
+     *     The class
      */
     public String getClass_() {
         return _class;

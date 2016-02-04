@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/drawer_layout"
     tools:context="com.mnf.sports.Activity.GroupActivityReal">
 
     <com.github.florent37.materialviewpager.MaterialViewPager
@@ -28,7 +29,6 @@
         app:viewpager_animatedHeaderImage="false"
 
         />
-
 
 
    <!-- <android.support.design.widget.FloatingActionButton

@@ -8,8 +8,8 @@ public class GroupMembersModel {
 
     private List<Result> result = new ArrayList<Result>();
     private String status;
-    private Integer totalPages;
-    private String currentPage;
+    private Integer total_pages;
+    private String current_page;
 
     /**
      * 
@@ -50,37 +50,37 @@ public class GroupMembersModel {
     /**
      * 
      * @return
-     *     The totalPages
+     *     The total_pages
      */
     public Integer getTotalPages() {
-        return totalPages;
+        return total_pages;
     }
 
     /**
      * 
-     * @param totalPages
+     * @param total_pages
      *     The total_pages
      */
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
+    public void setTotalPages(Integer total_pages) {
+        this.total_pages = total_pages;
     }
 
     /**
      * 
      * @return
-     *     The currentPage
+     *     The current_page
      */
     public String getCurrentPage() {
-        return currentPage;
+        return current_page;
     }
 
     /**
      * 
-     * @param currentPage
+     * @param current_page
      *     The current_page
      */
-    public void setCurrentPage(String currentPage) {
-        this.currentPage = currentPage;
+    public void setCurrentPage(String current_page) {
+        this.current_page = current_page;
     }
 
 }
