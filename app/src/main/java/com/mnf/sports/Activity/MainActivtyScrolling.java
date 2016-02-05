@@ -1,6 +1,7 @@
 package com.mnf.sports.Activity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -32,6 +34,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     Score scoreModel;
     Gson gson = new Gson();
     Toolbar toolbar;
+    ImageView ib,ig,iy,ir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,11 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ib = (ImageView) findViewById(R.id.ib);
+        ig = (ImageView) findViewById(R.id.ig);
+        iy = (ImageView) findViewById(R.id.iy);
+        ir = (ImageView) findViewById(R.id.ir);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +66,40 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
         });
 
         createNetworkRequestScore(Config.BASE_URL + Config.SCORE_URL);
+
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent grpIntent = new Intent(MainActivtyScrolling.this, GroupActivityReal.class);
+                grpIntent.putExtra("gid", "b");
+                startActivity(grpIntent);
+            }
+        });
+        ig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent grpIntent = new Intent(MainActivtyScrolling.this,GroupActivityReal.class);
+                grpIntent.putExtra("gid", "g");
+                startActivity(grpIntent);
+            }
+        });
+        iy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent grpIntent = new Intent(MainActivtyScrolling.this,GroupActivityReal.class);
+                grpIntent.putExtra("gid", "y");
+                startActivity(grpIntent);
+            }
+        });
+        ir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent grpIntent = new Intent(MainActivtyScrolling.this,GroupActivityReal.class);
+                grpIntent.putExtra("gid", "r");
+                startActivity(grpIntent);
+            }
+        });
+
 
     }
     public void createNetworkRequestScore(String url){

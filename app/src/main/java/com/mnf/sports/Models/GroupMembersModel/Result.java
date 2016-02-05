@@ -7,7 +7,7 @@ public class Result {
     private String id;
     private String name;
     private String year;
-    private String _class;
+    private String cls;
     private String createdAt;
     private String updatedAt;
 
@@ -68,19 +68,19 @@ public class Result {
     /**
      * 
      * @return
-     *     The class
+     *     The cls
      */
     public String getClass_() {
-        return _class;
+        return cls;
     }
 
     /**
      * 
-     * @param _class
-     *     The class
+     * @param cls
+     *     The cls
      */
-    public void setClass_(String _class) {
-        this._class = _class;
+    public void setClass_(String cls) {
+        this.cls = cls;
     }
 
     /**

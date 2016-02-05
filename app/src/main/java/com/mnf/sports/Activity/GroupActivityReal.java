@@ -60,23 +60,23 @@ public class GroupActivityReal extends AppCompatActivity {
 
             @Override
             public Fragment getItem(int position) {
-                Log.e("TAG","tab pos = "+position);
+                Log.e("TAG", "tab pos = " + position);
                 switch (position % 4) {
                     case 0:
 
-                    //return FragmentInstance.getInstance(1);
-                    return new BFragment();
+                        //return FragmentInstance.getInstance(1);
+                        return new BFragment();
                     case 1:
 
-                    return new GFragment();
+                        return new GFragment();
                     case 2:
 
-                    return new YFragment();
+                        return new YFragment();
                     case 3:
                         return new RFragment();
                     default:
                         return FragmentInstance.getInstance(1);
-                       // return null;
+                    // return null;
                 }
             }
 
@@ -100,6 +100,24 @@ public class GroupActivityReal extends AppCompatActivity {
                 return "";
             }
         });
+
+        if(getIntent().hasExtra("gid")){
+            String value = getIntent().getExtras().getString("gid");
+            switch (value){
+                case "b":
+                    mViewPager.getViewPager().setCurrentItem(0);
+                    break;
+                case "g":
+                    mViewPager.getViewPager().setCurrentItem(1);
+                    break;
+                case "y":
+                    mViewPager.getViewPager().setCurrentItem(2);
+                    break;
+                case "r":
+                    mViewPager.getViewPager().setCurrentItem(3);
+                    break;
+            }
+        }
 
 
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
@@ -137,7 +155,7 @@ public class GroupActivityReal extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
 

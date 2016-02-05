@@ -1,6 +1,7 @@
 package com.mnf.sports.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,11 +63,26 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.name.setText(mDataset.get(position).getName());
-        holder.year.setText(mDataset.get(position).getYear().toString());
+        Typeface type = Typeface.createFromAsset(c.getAssets(), "fonts/RobotoCondensed-Regular.ttf");
+        holder.name.setTypeface(type);
+            holder.name.setText(properCase(mDataset.get(position).getName().toString()));
+        holder.year.setText(mDataset.get(position).getYear().toString()+" year");
         holder.cls.setText(mDataset.get(position).getClass_());
     }
+    String properCase (String inputVal) {
+        // Empty strings should be returned as-is.
 
+        if (inputVal.length() == 0) return "";
+
+        // Strings with only one character uppercased.
+
+        if (inputVal.length() == 1) return inputVal.toUpperCase();
+
+        // Otherwise uppercase first letter, lowercase the rest.
+
+        return inputVal.substring(0,1).toUpperCase()
+                + inputVal.substring(1).toLowerCase();
+    }
     @Override
     public int getItemCount() {
         return mDataset.size();

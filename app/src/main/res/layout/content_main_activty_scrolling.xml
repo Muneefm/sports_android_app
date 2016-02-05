@@ -33,12 +33,14 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_weight="1"
+            android:id="@+id/ib"
             android:src="@drawable/b"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:id="@+id/ig"
 
             android:layout_weight="1"
             android:src="@drawable/g"
@@ -47,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:id="@+id/iy"
 
             android:layout_weight="1"
             android:src="@drawable/y"
@@ -57,6 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
+            android:id="@+id/ir"
+
             android:src="@drawable/r"
             />
 
