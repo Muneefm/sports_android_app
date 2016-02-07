@@ -112,5 +112,6 @@
     </string>
     <string name="title_activity_group_activity_real"></string>
     <string name="title_activity_main_activty_scrolling"></string>
+    <string name="title_activity_search">Search</string>
 
 </resources>

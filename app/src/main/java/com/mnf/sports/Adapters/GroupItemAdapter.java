@@ -47,7 +47,6 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.View
     }
     public void addItems(List<Result> newItems) {
         this.mDataset.addAll(newItems);
-
         notifyItemRangeInserted(this.mDataset.size(), newItems.size());
     }
 

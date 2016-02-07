@@ -36,6 +36,10 @@
         <activity
             android:name=".Activity.MainActivtyScrolling"
             android:label="@string/title_activity_main_activty_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
