@@ -10,7 +10,6 @@
     <dimen name="text_margin">16dp</dimen>
 
 
-
     <dimen name="paper_text_size">20sp</dimen>
     <color name="paper_text_color">#60000000</color>
     <color name="paper_button_color">#ffffffff</color>

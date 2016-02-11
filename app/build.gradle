@@ -45,4 +45,7 @@ dependencies {
     }
     compile 'com.github.rey5137:material:1.2.2'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.lawloretienne:imagegallery:0.0.12'
+
+
 }

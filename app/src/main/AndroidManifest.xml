@@ -40,6 +40,19 @@
         <activity
             android:name=".Activity.SearchActivity"
             android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.etiennelawlor.imagegallery.library.activities.ImageGalleryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label=""
+            android:theme="@style/ImageGalleryTheme" />
+        <activity
+            android:name=".Activity.GalleryActivity"
+            android:label="@string/title_activity_gallery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.OrderListActivity"
+            android:label="@string/title_activity_order_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

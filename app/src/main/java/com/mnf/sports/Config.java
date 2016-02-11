@@ -13,6 +13,8 @@ public static String BASE_URL="http://thegzis.in/sports/public/";
     public static String GROUP_MEMBER_Y="api/group?gpid=y";
     public static String GROUP_MEMBER_R="api/group?gpid=r";
     public static String GROUP_SEARCH = "api/group_search";
+    public static String IMAGE_URL = "api/images";
+    public static String IMAGE_RESOURCE_URL = "uploads/";
 
 
 }

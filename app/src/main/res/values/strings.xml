@@ -113,5 +113,7 @@
     <string name="title_activity_group_activity_real"></string>
     <string name="title_activity_main_activty_scrolling"></string>
     <string name="title_activity_search">Search</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_activity_order_list">OrderListActivity</string>
 
 </resources>

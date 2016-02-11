@@ -161,6 +161,8 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
 
         } else if (id == R.id.nav_slideshow) {
+            Intent activty = new Intent(MainActivtyScrolling.this, GalleryActivity.class);
+            startActivity(activty);
 
         } else if (id == R.id.nav_manage) {
 
