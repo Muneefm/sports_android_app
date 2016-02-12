@@ -114,6 +114,8 @@
     <string name="title_activity_main_activty_scrolling"></string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_gallery">GalleryActivity</string>
-    <string name="title_activity_order_list">OrderListActivity</string>
+    <string name="title_activity_order_list"></string>
+    <string name="title_activity_event_list">Events</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

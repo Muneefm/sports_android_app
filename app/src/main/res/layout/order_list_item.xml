@@ -29,7 +29,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/Running"
+            android:src="@mipmap/ic_running"
             />
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -49,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:text="Upcoming"
                     android:layout_marginTop="7dp"
+                    android:id="@+id/statusEv"
                     android:layout_below="@+id/eventName"
                     android:layout_marginLeft="10dp"
                     />
@@ -77,7 +78,7 @@
                     android:layout_below="@+id/textW"
                     android:layout_height="20dp"
                     android:layout_marginTop="7dp"
-
+                    android:id="@+id/winView"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_red"
                     />
@@ -118,12 +119,13 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-
+            android:id="@+id/winnerOne"
             android:text="1. Winner Lastname"
             />
         <View
             android:layout_width="100dp"
             android:layout_height="3dp"
+            android:id="@+id/pos1"
             android:layout_centerVertical="true"
             android:background="@color/red500"
             android:layout_alignParentRight="true"
@@ -136,6 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
+            android:id="@+id/winnerTwo"
 
             android:text="2. Winner middlename Lastname"
             />
@@ -143,6 +146,7 @@
             android:layout_width="70dp"
             android:layout_height="3dp"
             android:layout_centerVertical="true"
+            android:id="@+id/pos2"
 
             android:background="@color/green_500"
             android:layout_alignParentRight="true"
@@ -155,14 +159,15 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-
+            android:id="@+id/winnerThree"
             android:text="3. Winner name Lastname"
             />
         <View
             android:layout_width="30dp"
             android:layout_height="3dp"
-            android:layout_centerVertical="true"
+            android:id="@+id/pos3"
 
+            android:layout_centerVertical="true"
             android:background="@color/yellow_500"
             android:layout_alignParentRight="true"
             />

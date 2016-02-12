@@ -165,6 +165,8 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
             startActivity(activty);
 
         } else if (id == R.id.nav_manage) {
+            Intent activty = new Intent(MainActivtyScrolling.this, EventListActivity.class);
+            startActivity(activty);
 
         } else if (id == R.id.nav_share) {
 
