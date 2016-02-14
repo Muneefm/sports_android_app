@@ -20,34 +20,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/contCards"
-        android:layout_height="100dp">
+        android:layout_height="90dp">
         <LinearLayout
             android:layout_width="match_parent"
            android:orientation="horizontal"
             android:weightSum="2"
             android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:id="@+id/logoSport"
             android:src="@mipmap/ic_running"
             />
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100 Race Boys"
-                    android:layout_marginTop="25dp"
-                    android:textSize="20dp"
+                    android:text="Text"
+                    android:textSize="18dp"
                     android:id="@+id/eventName"
                     android:paddingLeft="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming"
+                    android:text="text"
+
                     android:layout_marginTop="7dp"
                     android:id="@+id/statusEv"
                     android:layout_below="@+id/eventName"
@@ -57,18 +60,23 @@
 
 
             </RelativeLayout>
+        </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:layout_marginRight="20dp"
+                android:visibility="gone"
+                android:id="@+id/winColorContainer"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
 
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Team Won"
+                    android:layout_marginTop="4dp"
                     android:layout_centerHorizontal="true"
 
                     android:id="@+id/textW"
@@ -87,7 +95,6 @@
 
 
 
-        </LinearLayout>
 
 
 
@@ -98,6 +105,7 @@
             android:id="@+id/winnersCards"
             android:layout_below="@+id/contCards"
             android:layout_marginBottom="0dp"
+            android:visibility="gone"
 
             android:layout_height="100dp">
 
@@ -105,15 +113,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="Winners :"
+                android:layout_marginLeft="3dp"
+
+                android:textColor="@color/grey700"
                 android:id="@+id/resultHead"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:id="@+id/comingUp"
+                android:text="Coming Up...."
                 />
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:id="@+id/winnerLinear"
+    android:visibility="gone"
+    android:layout_marginTop="5dp"
     android:layout_below="@+id/resultHead"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
@@ -145,6 +172,7 @@
         <View
             android:layout_width="70dp"
             android:layout_height="3dp"
+            android:layout_marginRight="30dp"
             android:layout_centerVertical="true"
             android:id="@+id/pos2"
 
@@ -166,6 +194,7 @@
             android:layout_width="30dp"
             android:layout_height="3dp"
             android:id="@+id/pos3"
+            android:layout_marginRight="70dp"
 
             android:layout_centerVertical="true"
             android:background="@color/yellow_500"
