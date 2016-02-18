@@ -18,6 +18,9 @@ public static String BASE_URL="http://thegzis.in/sports/public/";
     public static String EVENT_INDIVIDUAL = "api/events?evid=i";
     public static String EVENT_GROUP = "api/events?evid=g";
     public static String EVENT_SPECIAL = "api/events?evid=s";
+    public static String IMAGE_FEED_URL = "feedimages/";
+    public static String FEEDS = "api/feeds";
+
 
 
 }

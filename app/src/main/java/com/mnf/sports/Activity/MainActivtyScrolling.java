@@ -1,5 +1,6 @@
 package com.mnf.sports.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -10,20 +11,31 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.google.gson.Gson;
+import com.mnf.sports.Adapters.FeedListAdapter;
+import com.mnf.sports.Adapters.GroupItemAdapter;
 import com.mnf.sports.AppController;
 import com.mnf.sports.Config;
 import com.mnf.sports.Fragments.GroupFragmnet;
+import com.mnf.sports.Models.Feeds.FeedModel;
+import com.mnf.sports.Models.Feeds.Result;
 import com.mnf.sports.Models.Score;
 import com.mnf.sports.R;
+import com.squareup.picasso.Picasso;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.models.BarModel;
@@ -35,10 +47,20 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     Gson gson = new Gson();
     Toolbar toolbar;
     ImageView ib,ig,iy,ir;
+  //  RecyclerView feedsRecycle;
+    FeedListAdapter adapterFeed;
+    FeedModel feedModel;
+    Context c;
+    LinearLayout feedLinear;
+    private LinearLayoutManager mLayoutManager;
+    String ImageUrl = Config.BASE_URL+Config.IMAGE_FEED_URL;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activty_scrolling);
+        c = getApplicationContext();
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mBarChart = (BarChart) findViewById(R.id.barchart);
@@ -54,7 +76,14 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
         ig = (ImageView) findViewById(R.id.ig);
         iy = (ImageView) findViewById(R.id.iy);
         ir = (ImageView) findViewById(R.id.ir);
-
+        feedLinear = (LinearLayout) findViewById(R.id.feedLinear);
+      //  feedsRecycle = (RecyclerView) findViewById(R.id.feedid);
+        adapterFeed = new FeedListAdapter(c);
+        mLayoutManager
+                = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
+       // feedsRecycle.setHasFixedSize(false);
+        //feedsRecycle.setLayoutManager(mLayoutManager);
+        //feedsRecycle.setAdapter(adapterFeed);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +95,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
         });
 
         createNetworkRequestScore(Config.BASE_URL + Config.SCORE_URL);
+        makeFeedRequest(Config.BASE_URL+Config.FEEDS);
 
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +163,98 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
 
     }
+
+
+
+    public void makeFeedRequest(String rl){
+        JsonObjectRequest reqthree = new JsonObjectRequest(com.android.volley.Request.Method.GET, rl, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("tag", "Loaded feed data");
+                int limit = 0;
+
+                feedModel = gson.fromJson(response.toString(), FeedModel.class);
+                if(feedModel!=null) {
+                    if (feedModel.getStatus().equals("success")) {
+                        Log.e("tag", "Loaded feed succes");
+                        if(feedModel.getResult().size()>=10){
+                            limit=10;
+                        }else{
+                            limit=feedModel.getResult().size();
+                        }
+
+                        for(int i=0;i<limit;i++){
+                            Log.e("tag","feed result loop i = "+i);
+                            Result item = feedModel.getResult().get(i);
+                            View v = getLayoutInflater().inflate(R.layout.feed_item, null);
+                            TextView mainString,subString,authorFeed;
+                            CardView cardView;
+                            ImageView feedLogo;
+                            mainString = (TextView) v.findViewById(R.id.mainString);
+                            subString = (TextView) v.findViewById(R.id.subString);
+                            authorFeed = (TextView) v.findViewById(R.id.authorFeed);
+                            cardView = (CardView) v.findViewById(R.id.cardFeedItem);
+                            feedLogo = (ImageView) v.findViewById(R.id.feedImg);
+
+                            feedLogo.setVisibility(View.VISIBLE);
+                            if(item.getMainstring()!=null){
+                                mainString.setText(item.getMainstring().toString());
+                            }
+                            if(item.getSubstring()!=null){
+                                if(!item.getSubstring().equals("")){
+                                    subString.setText(item.getSubstring());
+                                }
+                            }
+                            if(item.getAuthor()!=null){
+                                if(!item.getAuthor().equals("")){
+                                    authorFeed.setText(item.getAuthor());
+                                }
+                            }
+
+                            if(item.getImage()!=null){
+                                if(!item.getImage().equals("")){
+                                    Picasso.with(c).load(ImageUrl + item.getImage()).into(feedLogo);
+                                }else{
+                                    feedLogo.setVisibility(View.GONE);
+                                }
+                            }else{
+                                feedLogo.setVisibility(View.GONE);
+                            }
+                            feedLinear.addView(v);
+                        }
+
+
+
+                       // adapterFeed.addItems(feedModel.getResult());
+                        //totalPages = feedModel.getTotalPages();
+                    }
+                }
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                if(volleyError.networkResponse!=null) {
+                    if (volleyError.networkResponse.statusCode == 401) {
+                        // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();
+                    }
+                }
+                Log.e("tagmeta", "error is " + volleyError.getLocalizedMessage()+"   \n error details = "+volleyError.getCause());
+
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(reqthree);
+
+
+    }
+
+
+
+
+
     public float Float(String s){
         return Float.parseFloat(s);
     }
