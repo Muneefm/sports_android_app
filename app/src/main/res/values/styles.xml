@@ -8,7 +8,13 @@
         <item name="colorAccent">@color/teal500</item>
 
     </style>
+    <style name="AppThemeNo" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/red500</item>
+        <item name="colorPrimaryDark">@color/red900</item>
+        <item name="colorAccent">@color/teal500</item>
 
+    </style>
     <style name="AppThemeViewPager" parent="AppTheme">
 
         <item name="android:textColorPrimary">@android:color/white</item>

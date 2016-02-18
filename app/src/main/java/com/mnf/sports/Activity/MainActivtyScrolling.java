@@ -151,20 +151,19 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-          //  getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,new GroupFragmnet()).commit();
-          //  toolbar.setVisibility(View.GONE);
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            Intent activty = new Intent(MainActivtyScrolling.this, MainActivtyScrolling.class);
+            startActivity(activty);
+        } else if (id == R.id.nav_group) {
             Intent activty = new Intent(MainActivtyScrolling.this, GroupActivityReal.class);
             startActivity(activty);
 
 
-        } else if (id == R.id.nav_slideshow) {
-            Intent activty = new Intent(MainActivtyScrolling.this, GalleryActivity.class);
+        } else if (id == R.id.nav_gallery) {
+            Intent activty = new Intent(MainActivtyScrolling.this, GalleryActivitySecond.class);
             startActivity(activty);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_events) {
             Intent activty = new Intent(MainActivtyScrolling.this, EventListActivity.class);
             startActivity(activty);
 

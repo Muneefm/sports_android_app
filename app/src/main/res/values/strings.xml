@@ -117,5 +117,7 @@
     <string name="title_activity_order_list"></string>
     <string name="title_activity_event_list">Events</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_gallery_activity_second">Gallery</string>
+    <string name="title_activity_image_view"></string>
 
 </resources>

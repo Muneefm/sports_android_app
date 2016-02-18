@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+      /*  if (id == R.id.nav_camera) {
             // Handle the camera action
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,new GroupFragmnet()).commit();
             toolbar.setVisibility(View.GONE);
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

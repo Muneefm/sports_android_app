@@ -73,7 +73,6 @@ public class SearchActivity extends AppCompatActivity {
         params.put("cls","");
         params.put("grp","");
         params.put("page","");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         filterButton = (PaperButton) findViewById(R.id.filterButton);
         clearButton = (PaperButton) findViewById(R.id.clearButton);
@@ -176,12 +175,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
         search = (SearchBox) findViewById(R.id.searchbox);
         search.enableVoiceRecognition(this);
