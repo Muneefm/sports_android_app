@@ -42,8 +42,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/clearButton"
-
         />
+
 </LinearLayout>
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,6 +53,34 @@
         android:layout_height="match_parent"
         />
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/noResult"
+    android:visibility="gone"
+    android:layout_centerVertical="true"
+    >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/sad"
+        android:id="@+id/sadImage"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Search Result"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/grey500"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/noresultText"
+        android:layout_below="@+id/sadImage"
+        />
+
+</RelativeLayout>
 
 
 

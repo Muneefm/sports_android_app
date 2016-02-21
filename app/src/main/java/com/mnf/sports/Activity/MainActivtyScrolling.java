@@ -36,6 +36,7 @@ import com.mnf.sports.Models.Feeds.Result;
 import com.mnf.sports.Models.Score;
 import com.mnf.sports.R;
 import com.squareup.picasso.Picasso;
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.models.BarModel;
@@ -54,7 +55,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     LinearLayout feedLinear;
     private LinearLayoutManager mLayoutManager;
     String ImageUrl = Config.BASE_URL+Config.IMAGE_FEED_URL;
-
+    DilatingDotsProgressBar mDilatingDotsProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mBarChart = (BarChart) findViewById(R.id.barchart);
+        mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progressGraph);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,8 +91,10 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Refreshing", Snackbar.LENGTH_LONG)
+                        .show();
+
+            reloadDataReq();
             }
         });
 
@@ -132,14 +136,22 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
 
     }
+
+    private void reloadDataReq() {
+        createNetworkRequestScore(Config.BASE_URL + Config.SCORE_URL);
+        makeFeedRequest(Config.BASE_URL + Config.FEEDS);
+    }
+
     public void createNetworkRequestScore(String url){
+        mDilatingDotsProgressBar.showNow();
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded Meta data");
-
+                mDilatingDotsProgressBar.hideNow();
                 scoreModel = gson.fromJson(response.toString(), Score.class);
                 if(scoreModel!=null){
+
                     initGraph(Float(scoreModel.getBlue()),Float(scoreModel.getGreen()),Float(scoreModel.getYellow()),Float(scoreModel.getRed()));
                 }
 
@@ -148,6 +160,14 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                mDilatingDotsProgressBar.hideNow();
+                Snackbar.make(feedLinear, R.string.network_error, Snackbar.LENGTH_LONG).setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        reloadDataReq();
+                    }
+                })
+                        .show();
 
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
@@ -235,7 +255,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                Snackbar.make(feedLinear, R.string.network_error, Snackbar.LENGTH_LONG).show();
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
                         // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();
@@ -260,6 +280,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     }
 
     public void initGraph(float b,float g,float y, float r){
+        mBarChart.clearChart();
 
         mBarChart.addBar(new BarModel(getString(R.string.blizardians), b, getApplicationContext().getResources().getColor(R.color.blue500)));
         mBarChart.addBar(new BarModel(getString(R.string.gravitans), g, getApplicationContext().getResources().getColor(R.color.greenA700)));

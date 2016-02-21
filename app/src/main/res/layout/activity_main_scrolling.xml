@@ -40,6 +40,19 @@
                     app:layout_collapseMode="parallax"
                     app:egBarWidth="40dp"
                     app:egLegendHeight="40dp"/>
+                <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+                    android:id="@+id/progressGraph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:radius="3dp"
+                    android:color="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    app:dd_numDots="5"
+                    app:dd_scaleMultiplier="1.5"
+                    app:dd_animationDuration="500"
+                    app:dd_horizontalSpacing="4dp"
+                    />
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
@@ -65,7 +78,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_search"
+        android:src="@mipmap/refresh"
         app:layout_anchorGravity="bottom|end" />
+
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

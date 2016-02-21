@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-sx
+    sx
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -18,7 +18,7 @@ sx
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.SplashActivity"
-            android:label="@string/title_activity_splash"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,12 @@ sx
         <activity
             android:name=".Activity.GroupActivityReal"
             android:label="@string/title_activity_group_activity_real"
-            android:theme="@style/AppThemeViewPager" />
+            android:parentActivityName=".Activity.MainActivtyScrolling"
+            android:theme="@style/AppThemeViewPager">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mnf.sports.Activity.MainActivtyScrolling" />
+        </activity>
         <activity
             android:name=".Activity.MainActivtyScrolling"
             android:label="@string/title_activity_main_activty_scrolling"
@@ -41,7 +46,12 @@ sx
         <activity
             android:name=".Activity.SearchActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/AppThemeNo" />
+            android:parentActivityName=".Activity.GroupActivityReal"
+            android:theme="@style/AppThemeNo">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mnf.sports.Activity.GroupActivityReal" />
+        </activity>
         <activity
             android:name="com.etiennelawlor.imagegallery.library.activities.ImageGalleryActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -58,15 +68,29 @@ sx
         <activity
             android:name=".Activity.EventListActivity"
             android:label="@string/title_activity_event_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".Activity.EventListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mnf.sports.Activity.EventListActivity" />
+        </activity>
         <activity
             android:name=".Activity.GalleryActivitySecond"
             android:label="@string/title_activity_gallery_activity_second"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".Activity.GalleryActivitySecond"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mnf.sports.Activity.GalleryActivitySecond" />
+        </activity>
         <activity
             android:name=".Activity.ImageViewActivity"
             android:label="@string/title_activity_image_view"
-            android:theme="@style/AppThemeNo"></activity>
+            android:theme="@style/AppThemeNo" />
+        <activity
+            android:name=".Activity.FeedsAcivity"
+            android:label="@string/title_activity_feeds_acivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

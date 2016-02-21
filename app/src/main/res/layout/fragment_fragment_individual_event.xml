@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.mnf.sports.Fragments.FragmentIndividualEvent">
 
     <!-- TODO: Update blank fragment layout -->
@@ -9,6 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/individualRecycle"
+        />
+    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+        android:id="@+id/progressEi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:radius="3dp"
+        android:color="@color/red"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:dd_numDots="5"
+        app:dd_scaleMultiplier="1.5"
+        app:dd_animationDuration="500"
+        app:dd_horizontalSpacing="4dp"
         />
 
 </RelativeLayout>

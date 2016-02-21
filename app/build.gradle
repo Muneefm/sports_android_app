@@ -49,4 +49,5 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.github.lawloretienne:imagegallery:0.0.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
 }

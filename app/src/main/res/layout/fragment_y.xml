@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.mnf.sports.Fragments.BFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -11,5 +12,19 @@
 
         android:layout_height="match_parent"
         />
+    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+        android:id="@+id/progressy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:radius="3dp"
+        android:color="@color/yellow_500"
+        android:layout_marginTop="100dp"
 
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:dd_numDots="6"
+        app:dd_scaleMultiplier="1.5"
+        app:dd_animationDuration="500"
+        app:dd_horizontalSpacing="4dp"
+        />
 </RelativeLayout>

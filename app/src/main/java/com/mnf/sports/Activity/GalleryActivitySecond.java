@@ -3,6 +3,7 @@ package com.mnf.sports.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.mnf.sports.Config;
 import com.mnf.sports.Models.EventModel.EventListModel;
 import com.mnf.sports.Models.GalleryModels.GalleryModel;
 import com.mnf.sports.R;
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
@@ -41,22 +43,27 @@ public class GalleryActivitySecond extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     boolean loading =true;
+    DilatingDotsProgressBar mDilatingDotsProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_second);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         galleryReycleView = (RecyclerView) findViewById(R.id.galleryRecycle);
+        mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progressGallery);
         setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            final ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
             }
-        });
+        }
 
 
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -103,11 +110,12 @@ public class GalleryActivitySecond extends AppCompatActivity {
     }
 
     private void makeJsonArrayRequest(String url) {
-
+        mDilatingDotsProgressBar.showNow();
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
+                mDilatingDotsProgressBar.hideNow();
 
                 mDat = gson.fromJson(response.toString(), GalleryModel.class);
                 loading = true;
@@ -126,6 +134,8 @@ public class GalleryActivitySecond extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                mDilatingDotsProgressBar.hideNow();
+                Snackbar.make(galleryReycleView, R.string.network_error, Snackbar.LENGTH_LONG).show();
 
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,6 +33,7 @@ import com.mnf.sports.R;
 import com.mnf.sports.UIclass.PaperButton;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
@@ -59,7 +62,8 @@ public class SearchActivity extends AppCompatActivity {
     RadioGroup groupRadioGroup,yearRadioGroup;
     EditText classEditText;
     String pYear,pGroup,pClass="";
-
+    DilatingDotsProgressBar mDilatingDotsProgressBar;
+    RelativeLayout noResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,21 @@ public class SearchActivity extends AppCompatActivity {
         c = getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+
+            final ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
+            }
+        }
+        mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progressSearch);
+        noResult = (RelativeLayout) findViewById(R.id.noResult);
         params = new HashMap<>();
         params.put("name", "");
         params.put("yr", "");
@@ -178,7 +197,9 @@ public class SearchActivity extends AppCompatActivity {
 
 
         search = (SearchBox) findViewById(R.id.searchbox);
-        search.enableVoiceRecognition(this);
+        search.setAnimateDrawerLogo(true);
+
+
         search.setLogoText("Search");
         openSearch();
 
@@ -289,6 +310,8 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void makeSearchRequest(String url){
+        mDilatingDotsProgressBar.showNow();
+        noResult.setVisibility(View.GONE);
         url +="?";
         for (String hsm :params.keySet()) {
         Log.e("tag","params key set  = "+hsm+" value = "+params.get(hsm));
@@ -300,13 +323,31 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
-
+                mDilatingDotsProgressBar.hideNow();
                 searchModel = gson.fromJson(response.toString(), GroupSearch.class);
                 loading = true;
                 if(searchModel!=null) {
                     if(searchModel.getStatus().equals("success")) {
                         mAdapterSearch.addItems(searchModel.getResult());
                         totalPages = searchModel.getTotalPages();
+                        Log.e("tag","result count = "+searchModel.getResult().size());
+                        if(searchModel.getResult().size()==0){
+                            Log.e("tag","inside 0 result");
+                            noResult.setVisibility(View.VISIBLE);
+                        }else{
+                            Log.e("tag","result count else case");
+                            noResult.setVisibility(View.GONE);
+                        }
+                    }else{
+                        if(searchModel.getResult()!=null){
+                            if(searchModel.getResult().size()==0){
+                                Log.e("tag","inside 0 result");
+                                noResult.setVisibility(View.VISIBLE);
+                            }else{
+                                Log.e("tag","result count else case");
+                                noResult.setVisibility(View.GONE);
+                            }
+                        }
                     }
                 }
 
@@ -315,6 +356,8 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                mDilatingDotsProgressBar.hideNow();
+                Snackbar.make(mRecyclerView, R.string.network_error, Snackbar.LENGTH_LONG).show();
 
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {

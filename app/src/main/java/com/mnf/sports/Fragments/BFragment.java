@@ -3,6 +3,7 @@ package com.mnf.sports.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.mnf.sports.Config;
 import com.mnf.sports.Models.GroupMembersModel.GroupMembersModel;
 import com.mnf.sports.Models.Score;
 import com.mnf.sports.R;
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
@@ -46,7 +48,7 @@ public class BFragment extends Fragment {
     public BFragment() {
         // Required empty public constructor
     }
-
+    DilatingDotsProgressBar mDilatingDotsProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +57,7 @@ public class BFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_b, container, false);
         c = getContext();
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressb);
         adapter = new GroupItemAdapter(c);
         mAdapter = new RecyclerViewMaterialAdapter(adapter);
         mLayoutManager
@@ -96,11 +99,13 @@ public class BFragment extends Fragment {
 
 
     public void makeNetworkRequest(String url){
+        mDilatingDotsProgressBar.showNow();
+
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
-
+                mDilatingDotsProgressBar.hideNow();
                 modelGroup = gson.fromJson(response.toString(), GroupMembersModel.class);
                 loading = true;
                 if(modelGroup!=null) {
@@ -118,6 +123,8 @@ public class BFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                mDilatingDotsProgressBar.hideNow();
+                Snackbar.make(mRecyclerView, R.string.network_error, Snackbar.LENGTH_LONG).show();
 
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {

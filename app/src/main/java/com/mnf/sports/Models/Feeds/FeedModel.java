@@ -8,8 +8,8 @@ public class FeedModel {
 
     private String status;
     private List<Result> result = new ArrayList<Result>();
-    private Integer currentPage;
-    private Integer totalPage;
+    private Integer current_page;
+    private Integer total_page;
 
     /**
      * 
@@ -50,37 +50,37 @@ public class FeedModel {
     /**
      * 
      * @return
-     *     The currentPage
+     *     The current_page
      */
     public Integer getCurrentPage() {
-        return currentPage;
+        return current_page;
     }
 
     /**
-     * 
-     * @param currentPage
+     *
+     * @param current_page
      *     The current_page
      */
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
+    public void setCurrentPage(Integer current_page) {
+        this.current_page = current_page;
     }
 
     /**
      * 
      * @return
-     *     The totalPage
+     *     The total_page
      */
     public Integer getTotalPage() {
-        return totalPage;
+        return total_page;
     }
 
     /**
      * 
-     * @param totalPage
+     * @param total_page
      *     The total_page
      */
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
+    public void setTotalPage(Integer total_page) {
+        this.total_page = total_page;
     }
 
 }
