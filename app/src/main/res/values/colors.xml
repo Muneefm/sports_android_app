@@ -243,6 +243,8 @@
         <item>#24c6d5</item>
     </string-array>
 
+    <color name="bckg">#FF5722</color>
+    <color name="filn">#607D8B</color>
 
     <color name="yellow600">#FDD835</color>
 

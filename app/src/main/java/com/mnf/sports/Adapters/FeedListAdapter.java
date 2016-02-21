@@ -1,6 +1,7 @@
 package com.mnf.sports.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mnf.sports.Activity.ImageViewActivity;
 import com.mnf.sports.Config;
 import com.mnf.sports.Models.Feeds.Result;
 import com.mnf.sports.R;
@@ -71,9 +73,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         return vh;    }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
-    Result item = mData.get(position);
+    final Result item = mData.get(position);
         holder.feedLogo.setVisibility(View.VISIBLE);
         if(item.getMainstring()!=null){
             holder.mainString.setText(item.getMainstring().toString());
@@ -92,6 +94,15 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
         if(item.getImage()!=null){
             if(!item.getImage().equals("")){
                 Picasso.with(c).load(ImageUrl + item.getImage()).into(holder.feedLogo);
+                holder.feedLogo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent myIntent = new Intent(c, ImageViewActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        myIntent.putExtra("id", ImageUrl+item.getImage());
+                        c.startActivity(myIntent);
+                    }
+                });
             }else{
                 holder.feedLogo.setVisibility(View.GONE);
             }

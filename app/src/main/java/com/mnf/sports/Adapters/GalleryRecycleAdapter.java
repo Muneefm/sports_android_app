@@ -71,7 +71,7 @@ public class GalleryRecycleAdapter extends RecyclerView.Adapter<GalleryRecycleAd
             public void onClick(View view) {
                 Intent myIntent = new Intent(c, ImageViewActivity.class);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                myIntent.putExtra("id",mData.get(position).getName());
+                myIntent.putExtra("id",imgUrl+mData.get(position).getName());
                 c.startActivity(myIntent);
             }
         });

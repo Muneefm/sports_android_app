@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.pushbots.push.Pushbots;
 
 /**
  * Created by Muneef on 25/01/16.
@@ -20,7 +21,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
+        Pushbots.sharedInstance().init(this);
     }
 
     public static synchronized AppController getInstance() {

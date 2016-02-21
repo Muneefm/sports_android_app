@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -56,6 +57,8 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
     private LinearLayoutManager mLayoutManager;
     String ImageUrl = Config.BASE_URL+Config.IMAGE_FEED_URL;
     DilatingDotsProgressBar mDilatingDotsProgressBar;
+    TextView feedMore;
+    RelativeLayout feedHead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,15 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
         iy = (ImageView) findViewById(R.id.iy);
         ir = (ImageView) findViewById(R.id.ir);
         feedLinear = (LinearLayout) findViewById(R.id.feedLinear);
+        feedHead = (RelativeLayout) findViewById(R.id.headRel);
+        feedMore = (TextView) findViewById(R.id.feedMore);
+        feedMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent feedActivity = new Intent(MainActivtyScrolling.this,FeedsAcivity.class);
+                startActivity(feedActivity);
+            }
+        });
       //  feedsRecycle = (RecyclerView) findViewById(R.id.feedid);
         adapterFeed = new FeedListAdapter(c);
         mLayoutManager
@@ -192,7 +204,7 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded feed data");
                 int limit = 0;
-
+                feedHead .setVisibility(View.VISIBLE);
                 feedModel = gson.fromJson(response.toString(), FeedModel.class);
                 if(feedModel!=null) {
                     if (feedModel.getStatus().equals("success")) {

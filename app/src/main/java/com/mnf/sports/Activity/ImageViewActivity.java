@@ -35,7 +35,7 @@ public class ImageViewActivity extends AppCompatActivity {
 
     ImageView image,down,share;
 Context c;
-String url = Config.BASE_URL+Config.IMAGE_RESOURCE_URL;
+//String url = Config.BASE_URL+Config.IMAGE_RESOURCE_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ String url = Config.BASE_URL+Config.IMAGE_RESOURCE_URL;
         down = (ImageView) findViewById(R.id.downlo);
 
         Picasso.with(c)
-                .load(url+key)
+                .load(key)
                 .into(image);
 
 
@@ -59,7 +59,7 @@ String url = Config.BASE_URL+Config.IMAGE_RESOURCE_URL;
             @Override
             public void onClick(View v) {
                 Picasso.with(c)
-                        .load(url+key)
+                        .load(key)
                         .into(getTarget());
                 Log.e("tag","down press");
 

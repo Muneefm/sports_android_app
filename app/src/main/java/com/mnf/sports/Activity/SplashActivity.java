@@ -14,14 +14,15 @@ import android.view.View;
 import com.daimajia.androidanimations.library.Techniques;
 import com.mnf.sports.MainActivity;
 import com.mnf.sports.R;
-import com.viksaa.sssplash.lib.activity.AwesomeSplash;
-import com.viksaa.sssplash.lib.cnst.Flags;
-import com.viksaa.sssplash.lib.model.ConfigSplash;
+import com.mnf.sports.SplashFiles.activity.AwesomeSplash;
+import com.mnf.sports.SplashFiles.cnst.Flags;
+import com.mnf.sports.SplashFiles.model.ConfigSplash;
+
 
 public class SplashActivity extends AwesomeSplash {
 
 
-    int TIME_OUT = 1000;
+    int TIME_OUT = 3000;
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
@@ -33,8 +34,8 @@ public class SplashActivity extends AwesomeSplash {
         //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
 
         //Customize Logo
-        configSplash.setLogoSplash(R.mipmap.ic_launcher); //or any other drawable
-        configSplash.setAnimLogoSplashDuration(2000); //int ms
+        configSplash.setLogoSplash(R.drawable.logos); //or any other drawable
+        configSplash.setAnimLogoSplashDuration(1000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
 
@@ -50,11 +51,17 @@ public class SplashActivity extends AwesomeSplash {
 
 
         //Customize Title
-        configSplash.setTitleSplash("Thegzis");
-        configSplash.setTitleTextColor(R.color.grey500);
-        configSplash.setTitleTextSize(30f); //float value
-        configSplash.setAnimTitleDuration(3000);
+        configSplash.setTitleSplash("Thegzis 16");
+        configSplash.setSubTitleSplash("Get Your Spirit ONN!!!");
+        configSplash.setTitleTextColor(R.color.black);;;
+        configSplash.setTitleTextSize(65f); //float value
+        configSplash.setAnimTitleDuration(2000);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
+       // configSplash.setTitleFont("fonts/Capture_it_2.ttf");
+        configSplash.setTitleFont("fonts/GoodDog.otf");
+
+        configSplash.setSubTitleFont("fonts/LobsterTwo-Regular.otf");
+
 
 
     }
