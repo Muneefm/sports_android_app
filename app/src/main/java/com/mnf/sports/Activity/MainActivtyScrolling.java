@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.google.gson.Gson;
 import com.mnf.sports.Adapters.FeedListAdapter;
@@ -247,7 +248,14 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
                             if(item.getImage()!=null){
                                 if(!item.getImage().equals("")){
-                                    Picasso.with(c).load(ImageUrl + item.getImage()).into(feedLogo);
+                                    //Picasso.with(c).load(ImageUrl + item.getImage()).into(feedLogo);
+                                    Glide
+                                            .with(c)
+                                            .load(ImageUrl + item.getImage())
+                                            .centerCrop()
+                                            .placeholder(R.mipmap.placeholder)
+                                            .crossFade()
+                                            .into(feedLogo);
                                     feedLogo.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mnf.sports.Activity.ImageViewActivity;
 import com.mnf.sports.Config;
 import com.mnf.sports.Models.Feeds.Result;
@@ -93,7 +94,14 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ViewHo
 
         if(item.getImage()!=null){
             if(!item.getImage().equals("")){
-                Picasso.with(c).load(ImageUrl + item.getImage()).into(holder.feedLogo);
+                //Picasso.with(c).load(ImageUrl + item.getImage()).into(holder.feedLogo);
+                Glide
+                        .with(c)
+                        .load(ImageUrl + item.getImage())
+                        .centerCrop()
+                        .placeholder(R.mipmap.placeholder)
+                        .crossFade()
+                        .into(holder.feedLogo);
                 holder.feedLogo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
