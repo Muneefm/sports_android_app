@@ -52,15 +52,15 @@ public class SplashActivity extends AwesomeSplash {
 
         //Customize Title
         configSplash.setTitleSplash("Thegzis 16");
-        configSplash.setSubTitleSplash("Get Your Spirit ONN!!!");
+        configSplash.setSubTitleSplash("Powered By Zkifods");
         configSplash.setTitleTextColor(R.color.black);;;
-        configSplash.setTitleTextSize(65f); //float value
+        configSplash.setTitleTextSize(45f); //float value
         configSplash.setAnimTitleDuration(2000);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
        // configSplash.setTitleFont("fonts/Capture_it_2.ttf");
-        configSplash.setTitleFont("fonts/GoodDog.otf");
+        configSplash.setTitleFont("fonts/steel.ttf");
 
-        configSplash.setSubTitleFont("fonts/LobsterTwo-Regular.otf");
+        configSplash.setSubTitleFont("fonts/Roboto-Regular.ttf");
 
 
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mnf.sports.Activity.ImageViewActivity;
 import com.mnf.sports.Config;
 import com.mnf.sports.Models.GalleryModels.Result;
@@ -64,8 +65,15 @@ public class GalleryRecycleAdapter extends RecyclerView.Adapter<GalleryRecycleAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Log.e("tag","onBindAdapter image pos = "+position+" url ="+imgUrl + mData.get(position).getName());
-        Picasso.with(c).load(imgUrl + mData.get(position).getName()).into(holder.image);
+        Log.e("tag", "onBindAdapter image pos = " + position + " url =" + imgUrl + mData.get(position).getName());
+       // Picasso.with(c).load(imgUrl + mData.get(position).getName()).placeholder(R.mipmap.placeholder).into(holder.image);
+        Glide
+                .with(c)
+                .load(imgUrl + mData.get(position).getName())
+                .centerCrop()
+                .placeholder(R.mipmap.placeholder)
+                .crossFade()
+                .into(holder.image);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

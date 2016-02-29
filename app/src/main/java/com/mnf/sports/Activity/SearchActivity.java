@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -30,6 +32,7 @@ import com.mnf.sports.Config;
 import com.mnf.sports.Models.GroupMembersModel.GroupMembersModel;
 import com.mnf.sports.Models.GroupSearchModels.GroupSearch;
 import com.mnf.sports.R;
+import com.mnf.sports.SplashFiles.utils.Strings;
 import com.mnf.sports.UIclass.PaperButton;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
@@ -125,6 +128,28 @@ public class SearchActivity extends AppCompatActivity {
         yearRadioGroup = (RadioGroup) customDialogueView.findViewById(R.id.grpRadioYear);
         classEditText = (EditText) customDialogueView.findViewById(R.id.id_class);
         View button = dialog.getActionButton(DialogAction.POSITIVE);
+
+
+        classEditText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                  //  Toast.makeText(HelloFormStuff.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+                    if(classEditText.getText()!=null){
+                        params.put("cls",classEditText.getText().toString());
+                    }
+                    makeSearchRequest(Url);
+                    resetAll("2");
+                    dialog.hide();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,7 +324,6 @@ public class SearchActivity extends AppCompatActivity {
         page = 1;
         params.put("page",page+"");
         Log.e("tag","reset called page = "+page);
-
         mAdapterSearch.removeItems();
         if(key.equals("1")) {
 
@@ -315,10 +339,9 @@ public class SearchActivity extends AppCompatActivity {
         url +="?";
         for (String hsm :params.keySet()) {
         Log.e("tag","params key set  = "+hsm+" value = "+params.get(hsm));
-            url += hsm+"="+params.get(hsm)+"&";
+            url += hsm+"="+ Strings.urlEncode(params.get(hsm))+"&";
         }
         Log.e("tag","final url  = "+url);
-
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

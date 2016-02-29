@@ -121,6 +121,9 @@
     <string name="title_activity_gallery_activity_second">Gallery</string>
     <string name="title_activity_image_view"></string>
     <string name="network_error">Network Error, please try again</string>
-    <string name="title_activity_feeds_acivity">FeedsAcivity</string>
+    <string name="title_activity_feeds_acivity">Dedications</string>
+
+    <string name="powered_by">Powered By Zkifods</string>
+
 
 </resources>

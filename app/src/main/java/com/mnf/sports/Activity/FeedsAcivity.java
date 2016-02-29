@@ -25,8 +25,12 @@ import com.mnf.sports.Models.Feeds.FeedModel;
 import com.mnf.sports.Models.Feeds.Result;
 import com.mnf.sports.R;
 import com.squareup.picasso.Picasso;
+import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
+
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
 
 public class FeedsAcivity extends AppCompatActivity {
     RecyclerView feedsRecycle;
@@ -40,6 +44,10 @@ public class FeedsAcivity extends AppCompatActivity {
     int page =1;
     int totalPages=1;
    String  feedUrl = Config.BASE_URL + Config.FEEDS;
+    //DilatingDotsProgressBar mDilatingDotsProgressBar;
+    CircularProgressBar progLogin;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +68,9 @@ public class FeedsAcivity extends AppCompatActivity {
         }
         c = getApplicationContext();
         feedsRecycle = (RecyclerView) findViewById(R.id.feedid);
+        progLogin = (CircularProgressBar) findViewById(R.id.progFeedback);
+
+       // mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progressFeed);
         adapterFeed = new FeedListAdapter(c);
         mLayoutManager
                 = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
@@ -97,10 +108,16 @@ public class FeedsAcivity extends AppCompatActivity {
     }
 
     public void makeFeedRequest(String rl){
+        //mDilatingDotsProgressBar.showNow();
+        progLogin.setVisibility(View.VISIBLE);
+        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
         JsonObjectRequest reqthree = new JsonObjectRequest(com.android.volley.Request.Method.GET, rl, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded feed data");
+               // mDilatingDotsProgressBar.hideNow();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
                 int limit = 0;
 
                 feedModel = gson.fromJson(response.toString(), FeedModel.class);
@@ -120,7 +137,12 @@ public class FeedsAcivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(feedsRecycle, R.string.network_error, Snackbar.LENGTH_LONG).show();
+              //  mDilatingDotsProgressBar.hideNow();
+             //   if(mDilatingDotsProgressBar!=null) {
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
+                    Snackbar.make(feedsRecycle, R.string.network_error, Snackbar.LENGTH_LONG).show();
+               // }
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
                         // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();

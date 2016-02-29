@@ -23,11 +23,26 @@
     <color name="mdtp_accent_color_dark">#E91E63</color>
 
     <integer-array name="colorsSmooth">
-        <item>@color/holo_blue_dark</item>
-        <item>@color/holo_yellow_dark</item>
-        <item>@color/holo_green_dark</item>
-        <item>@color/holo_purple_dark</item>
-        <item>@color/holo_red_dark</item>
+        <item>@color/red500</item>
+        <item>@color/blue500</item>
+        <item>@color/green_500</item>
+        <item>@color/yellow_700</item>
+    </integer-array>
+
+    <integer-array name="blueArray">
+        <item>@color/blue500</item>
+    </integer-array>
+
+    <integer-array name="greenArray">
+        <item>@color/green_500</item>
+    </integer-array>
+
+    <integer-array name="redArray">
+        <item>@color/red500</item>
+    </integer-array>
+
+    <integer-array name="yellowArray">
+        <item>@color/yellow_700</item>
     </integer-array>
 
     <color name="grey50">#FAFAFA</color>
@@ -247,5 +262,6 @@
     <color name="filn">#607D8B</color>
 
     <color name="yellow600">#FDD835</color>
+    <color name="yellowA200">#FFFF00</color>
 
 </resources>

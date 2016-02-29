@@ -81,7 +81,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/headRel"
-            android:visibility="visible"
+            android:visibility="gone"
             android:paddingTop="15dp"
             android:paddingBottom="10dp"
             android:layout_height="wrap_content">

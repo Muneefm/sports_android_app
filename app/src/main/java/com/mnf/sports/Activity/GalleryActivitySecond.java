@@ -99,7 +99,7 @@ public class GalleryActivitySecond extends AppCompatActivity {
                             page++;
 //                            paramsModel.add(new ParamsModel("page", page + ""));
 
-                            makeJsonArrayRequest(imageUrl + "&page=" + page);
+                            makeJsonArrayRequest(imageUrl + "?page=" + page);
                             //  showProgg();
                         }
                     }
@@ -111,6 +111,7 @@ public class GalleryActivitySecond extends AppCompatActivity {
 
     private void makeJsonArrayRequest(String url) {
         mDilatingDotsProgressBar.showNow();
+        Log.e("gallery","url = "+url);
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

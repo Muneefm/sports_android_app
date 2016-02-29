@@ -136,7 +136,7 @@ public class GroupActivityReal extends AppCompatActivity {
                     case 1:logo.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.g));
                         return HeaderDesign.fromColorAndUrl(getApplicationContext().getResources().getColor(R.color.green), "https://fs01.androidpit.info/a/63/0e/androidl-wallpapers-630ea6-h900.jpg");
                     case 2:logo.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.y));
-                        return HeaderDesign.fromColorAndUrl(getApplicationContext().getResources().getColor(R.color.yellow_500),  "https://fs01.androidpit.info/a/63/0e/androidl-wallpapers-630ea6-h900.jpg");
+                        return HeaderDesign.fromColorAndUrl(getApplicationContext().getResources().getColor(R.color.yellow_700),  "https://fs01.androidpit.info/a/63/0e/androidl-wallpapers-630ea6-h900.jpg");
                     case 3:logo.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.r));
                         return HeaderDesign.fromColorAndUrl(getApplicationContext().getResources().getColor(R.color.red),  "https://fs01.androidpit.info/a/63/0e/androidl-wallpapers-630ea6-h900.jpg");
                 }

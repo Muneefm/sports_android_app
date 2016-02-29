@@ -12,7 +12,7 @@
 
         android:layout_height="match_parent"
         />
-    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+  <!--  <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
         android:id="@+id/progressy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,5 +26,21 @@
         app:dd_scaleMultiplier="1.5"
         app:dd_animationDuration="500"
         app:dd_horizontalSpacing="4dp"
+        /> -->
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progY"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:cpb_colors="@array/yellowArray"
+        app:cpb_rotation_speed="2.0"
+        app:cpb_sweep_speed="1.0"
+        app:cpb_min_sweep_angle="10"
+        app:cpb_max_sweep_angle="300"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         />
 </RelativeLayout>

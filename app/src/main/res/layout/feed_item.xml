@@ -15,20 +15,20 @@
     android:id="@+id/cardFeedItem">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp">
         <ImageView
             android:layout_width="100dp"
             android:id="@+id/feedImg"
             android:scaleType="centerCrop"
-            android:layout_height="100dp" />
+            android:layout_height="120dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:textSize="16dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/feedImg"
-            android:text="This is the main String"
+            android:text=""
             android:id="@+id/mainString"
             />
         <TextView
@@ -39,19 +39,19 @@
             android:layout_marginLeft="10dp"
 
             android:layout_toRightOf="@+id/feedImg"
-            android:text="This is the sub String"
+            android:text=""
             android:layout_below="@+id/mainString"
             android:id="@+id/subString"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="By Author name"
+            android:text=""
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:id="@+id/authorFeed"
             android:paddingBottom="10dp"
-            android:layout_below="@+id/subString"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             />

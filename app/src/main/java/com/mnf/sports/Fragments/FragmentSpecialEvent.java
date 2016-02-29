@@ -24,6 +24,9 @@ import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentSpecialEvent#newInstance} factory method to
@@ -40,7 +43,7 @@ public class FragmentSpecialEvent extends Fragment {
 
     Context c;
 
-
+    CircularProgressBar progLogin;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,7 +54,7 @@ public class FragmentSpecialEvent extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    DilatingDotsProgressBar mDilatingDotsProgressBar;
+    //DilatingDotsProgressBar mDilatingDotsProgressBar;
     public FragmentSpecialEvent() {
         // Required empty public constructor
     }
@@ -89,8 +92,8 @@ public class FragmentSpecialEvent extends Fragment {
         View v = inflater.inflate(R.layout.fragment_special_event, container, false);
         c =getContext();
         evIndiRecycle = (RecyclerView) v.findViewById(R.id.specialRecycle);
-        mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressEs);
-
+       // mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressEs);
+        progLogin = (CircularProgressBar) v.findViewById(R.id.progSpecial);
         mAdapter = new EventListAdapter(c);
         mLayoutManager
                 = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
@@ -104,13 +107,16 @@ public class FragmentSpecialEvent extends Fragment {
     }
 
     private void makeNetworkRequest(String url) {
-        mDilatingDotsProgressBar.showNow();
-
+       //mDilatingDotsProgressBar.showNow();
+        progLogin.setVisibility(View.VISIBLE);
+        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
-                mDilatingDotsProgressBar.hideNow();
+                //mDilatingDotsProgressBar.hideNow();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
                 eventModel = gson.fromJson(response.toString(), EventListModel.class);
 
                 if(eventModel!=null) {
@@ -127,8 +133,17 @@ public class FragmentSpecialEvent extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                mDilatingDotsProgressBar.hideNow();
-                Snackbar.make(evIndiRecycle, R.string.network_error, Snackbar.LENGTH_LONG).show();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
+               // mDilatingDotsProgressBar.hideNow();
+                //if(mDilatingDotsProgressBar!=null) {
+                if(getView()!=null) {
+                    Snackbar.make(getView(), R.string.network_error, Snackbar.LENGTH_LONG).show();
+                }else{
+                    Log.e("snack","inside getView null");
+
+                }
+                //}
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
                         // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();

@@ -2,7 +2,9 @@ package com.mnf.sports.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -214,10 +216,10 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
                         }else{
                             limit=feedModel.getResult().size();
                         }
-
+                        feedLinear.removeAllViews();
                         for(int i=0;i<limit;i++){
                             Log.e("tag","feed result loop i = "+i);
-                            Result item = feedModel.getResult().get(i);
+                            final Result item = feedModel.getResult().get(i);
                             View v = getLayoutInflater().inflate(R.layout.feed_item, null);
                             TextView mainString,subString,authorFeed;
                             CardView cardView;
@@ -246,9 +248,19 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
                             if(item.getImage()!=null){
                                 if(!item.getImage().equals("")){
                                     Picasso.with(c).load(ImageUrl + item.getImage()).into(feedLogo);
+                                    feedLogo.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent myIntent = new Intent(c, ImageViewActivity.class);
+                                            myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            myIntent.putExtra("id", ImageUrl + item.getImage());
+                                            c.startActivity(myIntent);
+                                        }
+                                    });
                                 }else{
                                     feedLogo.setVisibility(View.GONE);
                                 }
+
                             }else{
                                 feedLogo.setVisibility(View.GONE);
                             }
@@ -267,8 +279,9 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Snackbar.make(feedLinear, R.string.network_error, Snackbar.LENGTH_LONG).show();
-                if(volleyError.networkResponse!=null) {
+                if(mDilatingDotsProgressBar!=null) {
+                    Snackbar.make(mDilatingDotsProgressBar, R.string.network_error, Snackbar.LENGTH_LONG).show();
+                }                if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
                         // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();
                     }
@@ -322,13 +335,45 @@ public class MainActivtyScrolling extends AppCompatActivity implements Navigatio
             Intent activty = new Intent(MainActivtyScrolling.this, EventListActivity.class);
             startActivity(activty);
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_search) {
+            Intent activty = new Intent(MainActivtyScrolling.this, SearchActivity.class);
+            startActivity(activty);
 
-        } else if (id == R.id.nav_send) {
+        }else if (id == R.id.nav_dedication) {
+            Intent activty = new Intent(MainActivtyScrolling.this, FeedsAcivity.class);
+            startActivity(activty);
 
+        }
+
+        else if (id == R.id.nav_website) {
+            Intent website = new Intent(Intent.ACTION_VIEW, Uri.parse("http://thegzis.in"));
+            startActivity(website);
+
+        } else if (id == R.id.nav_facebook) {
+            Intent website = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/THEGZIS16-599000316913933/"));
+           startActivity(website);
+           // callFB();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;    }
+
+
+    public void callFB(){
+        String facebookUrl = "https://www.facebook.com/THEGZIS16-599000316913933";
+        try {
+            int versionCode = getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) {
+                Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));;
+            } else {
+                // open the Facebook app using the old method (fb://profile/id or fb://page/id)
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/THEGZIS16-599000316913933")));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            // Facebook is not installed. Open the browser
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl)));
+        }
+    }
 }

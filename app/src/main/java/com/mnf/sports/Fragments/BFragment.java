@@ -28,6 +28,9 @@ import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -45,6 +48,8 @@ public class BFragment extends Fragment {
     GroupMembersModel modelGroup;
     int totalPages=1;
     String Url = Config.BASE_URL+Config.GROUP_MEMBER_B;
+    CircularProgressBar progLogin;
+
     public BFragment() {
         // Required empty public constructor
     }
@@ -57,7 +62,8 @@ public class BFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_b, container, false);
         c = getContext();
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressb);
+        //mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressb);
+        progLogin = (CircularProgressBar) v.findViewById(R.id.progB);
         adapter = new GroupItemAdapter(c);
         mAdapter = new RecyclerViewMaterialAdapter(adapter);
         mLayoutManager
@@ -99,13 +105,17 @@ public class BFragment extends Fragment {
 
 
     public void makeNetworkRequest(String url){
-        mDilatingDotsProgressBar.showNow();
-
+        //mDilatingDotsProgressBar.showNow();
+        progLogin.setVisibility(View.VISIBLE);
+        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
-                mDilatingDotsProgressBar.hideNow();
+                //mDilatingDotsProgressBar.hideNow();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
+
                 modelGroup = gson.fromJson(response.toString(), GroupMembersModel.class);
                 loading = true;
                 if(modelGroup!=null) {
@@ -123,8 +133,15 @@ public class BFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                mDilatingDotsProgressBar.hideNow();
-                Snackbar.make(mRecyclerView, R.string.network_error, Snackbar.LENGTH_LONG).show();
+                //mDilatingDotsProgressBar.hideNow();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
+
+               // if(mDilatingDotsProgressBar!=null) {
+                if(getView()!=null) {
+                    Snackbar.make(getView(), R.string.network_error, Snackbar.LENGTH_LONG).show();
+                }
+              //  }
 
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
