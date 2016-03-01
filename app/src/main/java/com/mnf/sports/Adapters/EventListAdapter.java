@@ -282,7 +282,7 @@ public void setUpAnimation(final ViewHolder holder){
             case "e28":
                 return R.mipmap.ic_race;
             case "e29":
-                return R.mipmap.ic_race;
+                return R.mipmap.ic_militia;
             case "e30":
                 return R.mipmap.ic_volley;
             case "e31":
