@@ -6,11 +6,17 @@
     tools:context="com.mnf.sports.Fragments.FragmentGroupEvent">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeEventG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/groupRecycle"
         />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
   <!--  <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
         android:id="@+id/progressEg"

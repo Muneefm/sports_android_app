@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class FragmentSpecialEvent extends Fragment {
     Context c;
 
     CircularProgressBar progLogin;
+    SwipeRefreshLayout swipeContainer;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,22 +97,45 @@ public class FragmentSpecialEvent extends Fragment {
         evIndiRecycle = (RecyclerView) v.findViewById(R.id.specialRecycle);
        // mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressEs);
         progLogin = (CircularProgressBar) v.findViewById(R.id.progSpecial);
+
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeEventS);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_dark,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                makeNetworkRequest(Url,1);
+
+            }
+        });
+
         mAdapter = new EventListAdapter(c);
         mLayoutManager
                 = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
         evIndiRecycle.setHasFixedSize(false);
         evIndiRecycle.setLayoutManager(mLayoutManager);
         evIndiRecycle.setAdapter(mAdapter);
-        makeNetworkRequest(Url);
+        makeNetworkRequest(Url,0);
 
 
     return v;
     }
 
-    private void makeNetworkRequest(String url) {
+    public void stopSwipRedresh(){
+        if(swipeContainer.isRefreshing()){
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
+    private void makeNetworkRequest(String url, final int key) {
        //mDilatingDotsProgressBar.showNow();
-        progLogin.setVisibility(View.VISIBLE);
-        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
+        if(key==0) {
+            progLogin.setVisibility(View.VISIBLE);
+            ((CircularProgressDrawable) progLogin.getIndeterminateDrawable()).start();
+        }
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -118,11 +144,13 @@ public class FragmentSpecialEvent extends Fragment {
                 ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
                 progLogin.setVisibility(View.GONE);
                 eventModel = gson.fromJson(response.toString(), EventListModel.class);
-
+                stopSwipRedresh();
                 if(eventModel!=null) {
                     if (eventModel.getStatus().equals("success")) {
                         Log.e("tag", "Loaded  succes");
-
+                        if(key==1){
+                            mAdapter.removeAll();
+                        }
                         mAdapter.addItems(eventModel.getResult());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -137,6 +165,7 @@ public class FragmentSpecialEvent extends Fragment {
                 progLogin.setVisibility(View.GONE);
                // mDilatingDotsProgressBar.hideNow();
                 //if(mDilatingDotsProgressBar!=null) {
+                stopSwipRedresh();
                 if(getView()!=null) {
                     Snackbar.make(getView(), R.string.network_error, Snackbar.LENGTH_LONG).show();
                 }else{

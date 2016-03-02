@@ -105,10 +105,13 @@ public class SearchActivity extends AppCompatActivity {
                 params.put("name", "");
                 params.put("yr", "");
                 params.put("cls","");
-                params.put("grp","");
-                params.put("page","");
+                params.put("grp", "");
+                params.put("page", "");
+                groupRadioGroup.clearCheck();
+                yearRadioGroup.clearCheck();
                 Snackbar.make(view, "Filters Cleared ", Snackbar.LENGTH_LONG)
                         .show();
+
             }
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.grp_search_recycle);
@@ -140,6 +143,9 @@ public class SearchActivity extends AppCompatActivity {
                     if(classEditText.getText()!=null){
                         params.put("cls",classEditText.getText().toString());
                     }
+                    if (search.getSearchText() != null) {
+                        params.put("name", search.getSearchText().toString());
+                    }
                     makeSearchRequest(Url);
                     resetAll("2");
                     dialog.hide();
@@ -155,12 +161,16 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.e("tag", "search button press");
 
-                if(classEditText.getText()!=null){
-                    params.put("cls",classEditText.getText().toString());
+                if (classEditText.getText() != null) {
+                    params.put("cls", classEditText.getText().toString());
+                }
+                if (search.getSearchText() != null) {
+                    Log.e("tag", "search text = " + search.getSearchText());
+                    params.put("name", search.getSearchText().toString());
                 }
 
 
-            makeSearchRequest(Url);
+                makeSearchRequest(Url);
                 resetAll("2");
                 dialog.hide();
             }
@@ -251,6 +261,8 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onSearch(String s) {
+                Log.e("tag","inside search  key down query = "+s);
+
                 resetAll("1");
                 namep = s;
                 params.put("name", namep);
@@ -263,7 +275,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
+      /*  search.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    Log.e("tag","inside search edit text key down query = "+search.getSearchText());
+                    // Perform action on key press
+                    //  Toast.makeText(HelloFormStuff.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+                    if (search.getSearchText() != null) {
+                        params.put("name", search.getSearchText().toString());
+                    }
+                    makeSearchRequest(Url);
+                    resetAll("2");
+                    dialog.hide();
+                    return true;
+                }
+                return false;
+            }
+        });*/
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

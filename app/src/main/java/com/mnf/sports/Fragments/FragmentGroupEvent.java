@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,6 +52,9 @@ public class FragmentGroupEvent extends Fragment {
     private String mParam1;
     private String mParam2;
     CircularProgressBar progLogin;
+    SwipeRefreshLayout swipeContainer;
+
+
 
     DilatingDotsProgressBar mDilatingDotsProgressBar;
     public FragmentGroupEvent() {
@@ -91,25 +95,48 @@ public class FragmentGroupEvent extends Fragment {
         evIndiRecycle = (RecyclerView) v.findViewById(R.id.groupRecycle);
         //mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressEg);
         progLogin = (CircularProgressBar) v.findViewById(R.id.progGrp);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeEventG);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_dark,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                makeNetworkRequest(Url,1);
+
+            }
+        });
         mAdapter = new EventListAdapter(c);
         mLayoutManager
                 = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
         evIndiRecycle.setHasFixedSize(false);
         evIndiRecycle.setLayoutManager(mLayoutManager);
         evIndiRecycle.setAdapter(mAdapter);
-        makeNetworkRequest(Url);
+        makeNetworkRequest(Url,0);
     return  v;
     }
-    public void makeNetworkRequest(String url){
+
+
+    public void stopSwipRedresh(){
+        if(swipeContainer.isRefreshing()){
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
+    public void makeNetworkRequest(String url, final int key){
        // mDilatingDotsProgressBar.showNow();
-        progLogin.setVisibility(View.VISIBLE);
-        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
+        if(key==0) {
+            progLogin.setVisibility(View.VISIBLE);
+            ((CircularProgressDrawable) progLogin.getIndeterminateDrawable()).start();
+        }
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
               //  mDilatingDotsProgressBar.hideNow();
+                stopSwipRedresh();
                 ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
                 progLogin.setVisibility(View.GONE);
                 eventModel = gson.fromJson(response.toString(), EventListModel.class);
@@ -117,7 +144,9 @@ public class FragmentGroupEvent extends Fragment {
                 if(eventModel!=null) {
                     if (eventModel.getStatus().equals("success")) {
                         Log.e("tag", "Loaded  succes");
-
+                        if(key==1){
+                            mAdapter.removeAll();
+                        }
                         mAdapter.addItems(eventModel.getResult());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -131,7 +160,7 @@ public class FragmentGroupEvent extends Fragment {
                 //mDilatingDotsProgressBar.hideNow();
                 ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
                 progLogin.setVisibility(View.GONE);
-
+                stopSwipRedresh();
                // if(mDilatingDotsProgressBar!=null) {
                 if(getView()!=null) {
                     Log.e("snack","inside getView not null");

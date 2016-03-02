@@ -46,6 +46,13 @@ public class GalleryRecycleAdapter extends RecyclerView.Adapter<GalleryRecycleAd
         this.c = mContext;
     }
 
+
+    public void removeAll() {
+        this.mData.clear();
+            notifyDataSetChanged();
+    }
+
+
     public void addItems(List<Result> newItems) {
         this.mData.addAll(newItems);
         notifyItemRangeInserted(this.mData.size(), newItems.size());

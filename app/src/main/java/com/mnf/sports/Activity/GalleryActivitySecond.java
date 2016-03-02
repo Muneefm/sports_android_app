@@ -3,6 +3,7 @@ package com.mnf.sports.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,6 +28,9 @@ import com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar;
 
 import org.json.JSONObject;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
+
 public class GalleryActivitySecond extends AppCompatActivity {
     RecyclerView galleryReycleView;
     public Gson gson = new Gson();
@@ -43,14 +47,16 @@ public class GalleryActivitySecond extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     boolean loading =true;
-    DilatingDotsProgressBar mDilatingDotsProgressBar;
+    SwipeRefreshLayout swipeContainer;
+    CircularProgressBar progLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_second);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         galleryReycleView = (RecyclerView) findViewById(R.id.galleryRecycle);
-        mDilatingDotsProgressBar = (DilatingDotsProgressBar) findViewById(R.id.progressGallery);
+        progLogin = (CircularProgressBar) findViewById(R.id.progGlry);
+
         setSupportActionBar(toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -65,6 +71,19 @@ public class GalleryActivitySecond extends AppCompatActivity {
             }
         }
 
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainerg);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_dark,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                makeJsonArrayRequest(imageUrl,1);
+
+            }
+        });
 
         Display display = this.getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -80,7 +99,7 @@ public class GalleryActivitySecond extends AppCompatActivity {
 
         galleryReycleView.setAdapter(adapter);
 
-        makeJsonArrayRequest(imageUrl);
+        makeJsonArrayRequest(imageUrl,0);
 
         galleryReycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -99,7 +118,7 @@ public class GalleryActivitySecond extends AppCompatActivity {
                             page++;
 //                            paramsModel.add(new ParamsModel("page", page + ""));
 
-                            makeJsonArrayRequest(imageUrl + "?page=" + page);
+                            makeJsonArrayRequest(imageUrl + "?page=" + page,0);
                             //  showProgg();
                         }
                     }
@@ -109,23 +128,34 @@ public class GalleryActivitySecond extends AppCompatActivity {
 
     }
 
-    private void makeJsonArrayRequest(String url) {
-        mDilatingDotsProgressBar.showNow();
-        Log.e("gallery","url = "+url);
+    private void makeJsonArrayRequest(String url, final int key) {
+        if(key==0) {
+            progLogin.setVisibility(View.VISIBLE);
+            ((CircularProgressDrawable) progLogin.getIndeterminateDrawable()).start();
+        }
+        Log.e("gallery", "url = " + url);
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("tag", "Loaded  data");
-                mDilatingDotsProgressBar.hideNow();
-
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
                 mDat = gson.fromJson(response.toString(), GalleryModel.class);
                 loading = true;
 
+
+                stopSwipRedresh();
                 if(mDat!=null) {
                     if (mDat.getStatus().equals("success")) {
                         Log.e("tag", "Loaded  succes");
+                        if(key==1){
+                            adapter.removeAll();
+                            page= 1;
+
+                        }
                         adapter.addItems(mDat.getResult());
                         totalPages = mDat.getTotalPage();
+
 
                     }
                 }
@@ -135,9 +165,12 @@ public class GalleryActivitySecond extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                mDilatingDotsProgressBar.hideNow();
+                ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
+                progLogin.setVisibility(View.GONE);
+                if(galleryReycleView!=null)
                 Snackbar.make(galleryReycleView, R.string.network_error, Snackbar.LENGTH_LONG).show();
 
+                stopSwipRedresh();
                 if(volleyError.networkResponse!=null) {
                     if (volleyError.networkResponse.statusCode == 401) {
                         // Toast.makeText(getActivity(), "Login Failed Invalid Credentials", Toast.LENGTH_LONG).show();
@@ -149,6 +182,12 @@ public class GalleryActivitySecond extends AppCompatActivity {
         });
 
         AppController.getInstance().addToRequestQueue(reqtwo);
+    }
+
+    public void stopSwipRedresh(){
+        if(swipeContainer.isRefreshing()){
+            swipeContainer.setRefreshing(false);
+        }
     }
 
 }

@@ -174,7 +174,7 @@ public class EventListActivity extends AppCompatActivity {
                 case 0:
                     return "Individual Event";
                 case 1:
-                    return "Group Event";
+                    return "Games";
                 case 2:
                     return "Special Event";
             }

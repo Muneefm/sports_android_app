@@ -1,15 +1,20 @@
 package com.mnf.sports.Activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,6 +43,7 @@ import java.util.Random;
 
 public class ImageViewActivity extends AppCompatActivity {
 
+    private static final int REQUEST_WRITE_STORAGE = 112;
     ImageView image,down,share;
 Context c;
 //String url = Config.BASE_URL+Config.IMAGE_RESOURCE_URL;
@@ -64,10 +70,22 @@ Context c;
                 .into(image);
 
 
+        boolean hasPermission = (ContextCompat.checkSelfPermission(ImageViewActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermission) {
+            Log.e("tag","inside no permission ");
+            ActivityCompat.requestPermissions(ImageViewActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }else{
+            Log.e("tag","inside yes permission ");
 
+        }
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Snackbar.make(image, "Saving to  /thegzis/", Snackbar.LENGTH_LONG).show();
+
                 getImageDonwload(key);
                /* Picasso.with(c)
                         .load(key)
@@ -81,6 +99,26 @@ Context c;
 
 
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            case REQUEST_WRITE_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    //reload my activity with permission granted or use the features what required the permission
+                } else
+                {
+                    Toast.makeText(ImageViewActivity.this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+    }
+
 
     public void getImageDonwload(String urlimg){
         Log.e("save","inside sownload function url = "+urlimg);
@@ -97,7 +135,7 @@ Context c;
                             protected Void doInBackground(Void... params) {
                                 File sdcard = Environment.getExternalStorageDirectory();
                                 File file = new File(sdcard + "/thegzis/" + getRandomNum() + "-thegzis16.jpg");
-                                Log.e("save","inside do inBackground file = "+file.getName());
+                                Log.e("save", "inside do inBackground file = " + file.getName() + " name sdcard = " + sdcard);
                                 File dir = file.getParentFile();
                                 try {
                                     Log.e("save", "inside try");
@@ -108,10 +146,10 @@ Context c;
                                     s.write(resource);
                                     s.flush();
                                     s.close();
-                                   // Toast.makeText(c,"Image Saved",Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(c,"Image Saved",Toast.LENGTH_LONG).show();
 
                                 } catch (IOException e) {
-                                    Log.e("save","inside catch e = "+e.getLocalizedMessage());
+                                    Log.e("save", "inside catch e = " + e.getLocalizedMessage());
                                     e.printStackTrace();
                                 }
                                 return null;

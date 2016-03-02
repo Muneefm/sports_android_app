@@ -23,18 +23,6 @@
 
     <include layout="@layout/content_gallery_activity_second" />
 
-    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
-        android:id="@+id/progressGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:radius="3dp"
-        android:color="@color/red"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:dd_numDots="5"
-        app:dd_scaleMultiplier="1.5"
-        app:dd_animationDuration="500"
-        app:dd_horizontalSpacing="4dp"
-        />
+
 
 </android.support.design.widget.CoordinatorLayout>

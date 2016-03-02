@@ -69,6 +69,11 @@ Context c;
         notifyItemRangeInserted(this.mDataset.size(), newItems.size());
     }
 
+    public void removeAll() {
+        this.mDataset.clear();
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -303,6 +308,10 @@ public void setUpAnimation(final ViewHolder holder){
                 return R.mipmap.ic_relay;
             case "e39":
                 return R.mipmap.ic_relay;
+            case "e40":
+                return R.mipmap.ic_tennis;
+            case "e41":
+                return R.mipmap.ic_tennis;
             default:
                 return R.mipmap.ic_running;
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class FragmentIndividualEvent extends Fragment {
     public Gson gson = new Gson();
     CircularProgressBar progLogin;
     Context c;
+    SwipeRefreshLayout swipeContainer;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -94,6 +96,19 @@ public class FragmentIndividualEvent extends Fragment {
         evIndiRecycle = (RecyclerView) v.findViewById(R.id.individualRecycle);
        // mDilatingDotsProgressBar = (DilatingDotsProgressBar) v.findViewById(R.id.progressEi);
         progLogin = (CircularProgressBar) v.findViewById(R.id.progIndi);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeEventI);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_dark,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                makeNetworkRequest(Url,1);
+
+            }
+        });
         mAdapter = new EventListAdapter(c);
         mLayoutManager
                 = new LinearLayoutManager(c, LinearLayoutManager.VERTICAL, false);
@@ -101,14 +116,22 @@ public class FragmentIndividualEvent extends Fragment {
         evIndiRecycle.setLayoutManager(mLayoutManager);
         evIndiRecycle.setAdapter(mAdapter);
 
-    makeNetworkRequest(Url);
+    makeNetworkRequest(Url,0);
     return v;
     }
 
-    public void makeNetworkRequest(String url){
+    public void stopSwipRedresh(){
+        if(swipeContainer.isRefreshing()){
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
+    public void makeNetworkRequest(String url, final int key){
        // mDilatingDotsProgressBar.showNow();
-        progLogin.setVisibility(View.VISIBLE);
-        ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).start();
+        if(key==0) {
+            progLogin.setVisibility(View.VISIBLE);
+            ((CircularProgressDrawable) progLogin.getIndeterminateDrawable()).start();
+        }
         JsonObjectRequest reqtwo = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -116,13 +139,15 @@ public class FragmentIndividualEvent extends Fragment {
                // mDilatingDotsProgressBar.hideNow();
                 ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
                 progLogin.setVisibility(View.GONE);
-
+                stopSwipRedresh();
                 eventModel = gson.fromJson(response.toString(), EventListModel.class);
 
                 if(eventModel!=null) {
                     if (eventModel.getStatus().equals("success")) {
                         Log.e("tag", "Loaded  succes");
-
+                        if(key==1){
+                            mAdapter.removeAll();
+                        }
                         mAdapter.addItems(eventModel.getResult());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -136,6 +161,7 @@ public class FragmentIndividualEvent extends Fragment {
                // mDilatingDotsProgressBar.hideNow();
                 ((CircularProgressDrawable)progLogin.getIndeterminateDrawable()).stop();
                 progLogin.setVisibility(View.GONE);
+                stopSwipRedresh();
                 //if(mDilatingDotsProgressBar!=null) {
                 if(getView()!=null){
                     Snackbar.make(getView(), R.string.network_error, Snackbar.LENGTH_LONG).show();}else{
