@@ -77,12 +77,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mnf.sports.Activity.GroupActivityReal" />
         </activity>
-        <activity
-            android:name="com.etiennelawlor.imagegallery.library.activities.ImageGalleryActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label=""
-            android:screenOrientation="portrait"
-            android:theme="@style/ImageGalleryTheme" />
+
         <activity
             android:name=".Activity.GalleryActivity"
             android:label="@string/title_activity_gallery"

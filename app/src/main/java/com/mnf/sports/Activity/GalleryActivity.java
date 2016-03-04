@@ -11,8 +11,7 @@ import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.etiennelawlor.imagegallery.library.activities.ImageGalleryActivity;
-import com.etiennelawlor.imagegallery.library.enums.PaletteColorType;
+
 import com.google.gson.Gson;
 import com.mnf.sports.AppController;
 import com.mnf.sports.Config;
@@ -61,15 +60,6 @@ public class GalleryActivity extends AppCompatActivity {
                 if(model!=null) {
                     if (model.getStatus().equals("success")) {
                         Log.e("tag", "Loaded  succes");
-                        Intent intent = new Intent(GalleryActivity.this, ImageGalleryActivity.class);
-                        ArrayList<String> images = new ArrayList<>();
-                        for (Result imgResult :model.getResult()) {
-                            Log.e("tag",imageUrl+imgResult.getName().toString());
-                            images.add(imageUrl+imgResult.getName().toString());
-                        }
-                        intent.putStringArrayListExtra("images", images);
-                        //intent.putExtra("palette_color_type", PaletteColorType.VIBRANT);
-                        startActivity(intent);
 
                     //    adapter.addItems(modelGroup.getResult());
                       //  mAdapter.notifyDataSetChanged();;

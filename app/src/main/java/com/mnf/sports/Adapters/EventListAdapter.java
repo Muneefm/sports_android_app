@@ -312,6 +312,13 @@ public void setUpAnimation(final ViewHolder holder){
                 return R.mipmap.ic_tennis;
             case "e41":
                 return R.mipmap.ic_tennis;
+            case "e42":
+                return R.mipmap.ic_jumbhigh;
+            case "e43":
+                return R.mipmap.ic_running;
+            case "e44":
+                return R.mipmap.ic_running;
+
             default:
                 return R.mipmap.ic_running;
 

@@ -172,7 +172,7 @@ public class EventListActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Individual Event";
+                    return "Athletics";
                 case 1:
                     return "Games";
                 case 2:

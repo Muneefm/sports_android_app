@@ -46,8 +46,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.github.rey5137:material:1.2.2'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.github.lawloretienne:imagegallery:0.0.12'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
     compile 'com.github.jorgecastilloprz:fillableloaders:1.02@aar'
     compile 'com.github.ozodrukh:CircularReveal:1.1.1@aar'

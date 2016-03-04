@@ -62,7 +62,7 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Typeface type = Typeface.createFromAsset(c.getAssets(), "fonts/RobotoCondensed-Regular.ttf");
+        Typeface type = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.name.setTypeface(type);
             holder.name.setText(properCase(mDataset.get(position).getName().toString()));
         holder.year.setText(mDataset.get(position).getYear().toString()+" year");

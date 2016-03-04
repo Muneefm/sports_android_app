@@ -47,8 +47,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="name"
+        android:text=" "
         android:textSize="17dp"
+        android:singleLine="true"
         android:padding="4dp"
         android:layout_weight="1"
         android:textColor="@color/blue500"
@@ -68,7 +69,7 @@
             android:padding="5dp"
             android:textColor="@color/grey700"
             android:id="@+id/year"
-            android:text="1 yr"
+            android:text=""
             />
 
         <TextView
@@ -78,7 +79,7 @@
             android:textColor="@color/grey700"
             android:padding="5dp"
             android:id="@+id/cls"
-            android:text="cs2"
+            android:text=""
             />
 
     </LinearLayout>
