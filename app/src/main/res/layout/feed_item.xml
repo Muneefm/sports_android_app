@@ -37,7 +37,6 @@
             android:paddingTop="10dp"
             android:textSize="10dp"
             android:layout_marginLeft="10dp"
-
             android:layout_toRightOf="@+id/feedImg"
             android:text=""
             android:layout_below="@+id/mainString"
